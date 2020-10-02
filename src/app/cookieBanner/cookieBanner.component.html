@@ -1,0 +1,110 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h2 class="modal-title font-weight-bold" id="modal-basic-title">Can we store cookies?</h2>
+    
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="d-flex flex-column my-4 mx-4">
+      <p>
+        We and our partners use technologies, such as cookies. and process personal
+        data, such as IP addresses and cookie idenlifiers, lo personalize ads and content
+        based on your interests, measure the performance of ads and content, and derive
+        insights about the audiences who saw ads and content.
+       </p>
+      <p> 
+        Click below ta consent to the use of this technology and the processing of your
+        personal data for these purposes. You can change your mind and change your
+        consent choices at any time by returning to this site.
+      </p>
+
+      <p class="mt-2">Yoy can familiarize with our <a href="#" class="privacy-link">Privacy Policy</a></p> 
+    </div>
+    <div class="d-flex flex-row mb-4 mx-4 justify-content-center">
+      <button type="button" class="btn btn-lg btn-primary mr-3 font-weight-bold" aria-label="Close" (click)="modal.dismiss('Cross click')">     
+        Accept All
+      </button>
+
+      <button type="button" class="btn btn-lg btn-outline-primary" aria-label="Close" (click)="modal.dismiss('Cross click')"> 
+        Save Settings    
+      </button>
+      <button 
+        (click)="acc.toggle('toggle-1')"
+        class="toggleborderaccordion customize align-self-end ml-auto customize"
+      >
+        Customize
+        <div id="triangle"></div>
+      </button>
+
+    </div>
+
+    <ngb-accordion #acc="ngbAccordion">
+      <ngb-panel id="toggle-1" title="Invisible panel">
+        <ng-template ngbPanelContent>
+        <p class="font-weight-bold" *ngIf="!accordian">
+          Oops! No cookie customization found. Perhaps you lost connection to the internet?
+        </p>
+
+    <div class="accordions-container px-4 py-4">
+      <ngb-accordion #a="ngbAccordion" activeIds="custom-panel-1">
+
+        <ngb-panel id={{cookie.CategoyId}} *ngFor="let cookie of accordian | async" >
+            <ng-template ngbPanelHeader let-opened="opened">
+              <div class="d-flex align-items-center justify-content-between">
+
+                <div class="custom-control custom-switch">
+                  <input type="checkbox" class="custom-control-input" id={{cookie.CategoyId}}>
+                  <label class="custom-control-label font-weight-bold" for={{cookie.CategoyId}}>
+                    {{ cookie.CategoyHeading }}
+                  </label>
+                </div>
+
+                <button ngbPanelToggle class="toggleborderaccordion"><div id="triangle"></div></button>
+              </div>
+            </ng-template>
+          <ng-template ngbPanelContent>
+            <div class="px-3 py-3">
+              <p class="mb-3 categoy-text">{{ cookie.CategoyText }}</p>
+
+              <div class=" flex-row d-flex w-100 pl-0 align-items-start" >
+                <div class="col-4 pl-0">
+                  <p class="font-weight-bold dark-color">Plugins</p>
+                </div>
+
+                <div class="col-4">
+                  <p class="font-weight-bold dark-color">Block/Enable</p>
+                </div>
+
+                <div class="col-4">
+                </div>
+              </div>
+
+              <div class="custom-control custom-switch innerswitches flex-row d-flex w-100 pl-0" *ngFor="let PluginList of cookie.PluginList" >
+                <div class="col-4 pl-0">
+                  <p>{{PluginList.ComplianceType}}</p>
+                </div>
+
+                <div class="col-4">
+                  <input type="checkbox" class="custom-control-input" id={{PluginList.ComplianceTypeID}}>
+                  <label class="custom-control-label" for={{PluginList.ComplianceTypeID}}></label>
+                </div>
+
+                <div class="col-4">
+                  <a class="privacy-link" *ngIf="PluginList.optOutExternalLink" href={{PluginList.optOutExternalLink}}>Go to site</a>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </ngb-panel>
+      
+      </ngb-accordion>
+    </div>
+    </ng-template>
+  </ngb-panel>
+  </ngb-accordion>
+
+  </ng-template>
+  
+  <button class="btn btn-lg btn-outline-primary" (click)="open(content)">Change Cookie Banner Settings</button>
+  
